@@ -1,28 +1,32 @@
 package com.internal.TestSuites;
 
-import org.testng.annotations.AfterSuite;
+import org.testng.ITestListener;
+import org.testng.ITestResult;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
 import com.internal.Challenges.redBusWebsite.validateDates;
 import com.internal.base.DriverHelper;
 import com.internal.base.GlobalValues;
 
-public class redBusTest {
-	private validateDates buses;
+public class redBusTest implements ITestListener {
 
-	public redBusTest(GlobalValues globalValues) {
+	private final GlobalValues globalValues = new GlobalValues();
+	private validateDates buses = new validateDates(globalValues);
+
+	@BeforeSuite
+	public void launchBrowser() {
 		DriverHelper.launchBrowser();
-		buses = new validateDates(globalValues);
 	}
-	
+
 	@Test
 	public void test() {
 		buses.getWeekEndDates();
 	}
-	
-	@AfterSuite
-	public void closeBrowser() {
-		
+
+	@Override
+	public void onTestFailure(ITestResult result) {
+		DriverHelper.QuitBrowser();
 	}
 
 }
