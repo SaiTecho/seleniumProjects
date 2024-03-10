@@ -17,10 +17,10 @@ public class DriverHelper {
 	private static Properties prop;
 	private static WebDriver driver;
 
-	GlobalValues globalValues;
+	public GlobalValues globalValues;
 
-	public DriverHelper() {
-
+	public DriverHelper(GlobalValues globalValues) {
+		this.globalValues = globalValues;
 	}
 
 	public void loadAllProperties() {
@@ -78,10 +78,14 @@ public class DriverHelper {
 				}
 			}
 			this.globalValues.dataBuffer.put("webDriver", driver);
-			LOG.info(globalValues.dataBuffer.get("webDriver"));
 		} catch (Exception e) {
 			LOG.info("Exception occurred: " + e.getMessage());
 			throw e;
 		}
+	}
+
+	public void quitBrowser() {
+		WebDriver driver = (WebDriver) globalValues.dataBuffer.get("webDriver");
+		driver.quit();
 	}
 }
