@@ -19,6 +19,10 @@ public class DriverHelper {
 
 	GlobalValues globalValues;
 
+	public DriverHelper() {
+
+	}
+
 	public void loadAllProperties() {
 		prop = new Properties();
 		try {
@@ -28,7 +32,7 @@ public class DriverHelper {
 			for (String key : prop.stringPropertyNames()) {
 				LOG.info(key + "--" + prop.getProperty(key));
 			}
-			GlobalValues.setEnvConfig(prop);
+			GlobalValues.envConfig = prop;
 			LOG.info("SuccessFully Loaded The Config Properties");
 		} catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -73,17 +77,11 @@ public class DriverHelper {
 					driver = new EdgeDriver();
 				}
 			}
-			GlobalValues.dataBuffer.put("webDriver", driver);
-			LOG.info(GlobalValues.dataBuffer.get("webDriver"));
+			this.globalValues.dataBuffer.put("webDriver", driver);
+			LOG.info(globalValues.dataBuffer.get("webDriver"));
 		} catch (Exception e) {
 			LOG.info("Exception occurred: " + e.getMessage());
 			throw e;
 		}
 	}
-
-//	public static void QuitBrowser() {
-//		WebDriver driver = (WebDriver) globalValues.dataBuffer.get("webDriver");
-//		driver.quit();
-//	}
-
 }

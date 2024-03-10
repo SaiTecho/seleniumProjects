@@ -12,7 +12,7 @@ import com.internal.base.GlobalValues;
 public class redBusTest implements ITestListener {
 
     private final GlobalValues globalValues = new GlobalValues();
-    private final validateDates buses = new validateDates();
+//    private final validateDates buses = new validateDates();
 
     @BeforeSuite
     public void launchBrowser() {
@@ -21,7 +21,7 @@ public class redBusTest implements ITestListener {
 
     @Test
     public void test() {
-        buses.getWeekEndDates();
+    	new validateDates(globalValues).getWeekEndDates();
     }
 
 //    @Override

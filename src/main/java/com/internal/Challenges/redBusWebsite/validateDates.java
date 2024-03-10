@@ -8,32 +8,25 @@ import org.openqa.selenium.WebDriver;
 import com.internal.base.GlobalValues;
 import com.internal.base.PageActions;
 
-public class validateDates extends PageActions {
+public class validateDates {
 	private static Logger LOG = Logger.getLogger(validateDates.class);
-	private static Properties prop;
+	PageActions pageactions;
+	Properties prop;
+	
 
-	public validateDates() {
-		super((WebDriver) GlobalValues.dataBuffer.get("webDriver"));
-//		 if (!(GlobalValues.dataBuffer.get("webDriver") instanceof WebDriver)) {
-//           throw new IllegalArgumentException("webDriver not found in dataBuffer or not instance of WebDriver");
-//       }
-		this.prop = GlobalValues.getEnvConfig();
+	public validateDates(GlobalValues globalValues) {
+		LOG.info(globalValues.dataBuffer.get("webDriver"));
+		if(globalValues.dataBuffer.get("webDriver") == null) {
+			LOG.info("NULL");
+		}else {
+			LOG.info("NOT NULL");
+		}
+		pageactions = new PageActions((WebDriver) globalValues.dataBuffer.get("webDriver"));
+		this.prop = GlobalValues.envConfig;
 	}
 
-//	public ValidateDates() {
-//        super((WebDriver) GlobalValues.dataBuffer.get("webDriver"));
-//        if (!(GlobalValues.dataBuffer.get("webDriver") instanceof WebDriver)) {
-//            throw new IllegalArgumentException("webDriver not found in dataBuffer or not instance of WebDriver");
-//        }
-//        this.prop = GlobalValues.getEnvConfig();
-//    }
 	public void getWeekEndDates() {
-		if (GlobalValues.dataBuffer.get("webDriver") == null) {
-			LOG.info("driver was null");
-		}else {
-			LOG.info("Not null");
-		}
 		LOG.info(prop.getProperty("redBusUrl"));
-//		NavigateTo("https://www.google.com");
+		pageactions.NavigateTo("https://www.google.com");
 	}
 }

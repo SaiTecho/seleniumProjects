@@ -24,11 +24,6 @@ public class PageActions {
 
 	public void NavigateTo(String url) {
 		try {
-			if (driver == null) {
-				LOG.info("driver was null");
-			}else {
-				LOG.info("NOT NULL");
-			}
 			this.driver.navigate().to(url);
 			waitForPageLoad();
 			LOG.info("Navigated to : " + url);
