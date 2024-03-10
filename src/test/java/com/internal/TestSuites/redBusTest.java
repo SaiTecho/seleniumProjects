@@ -11,22 +11,23 @@ import com.internal.base.GlobalValues;
 
 public class redBusTest implements ITestListener {
 
-	private final GlobalValues globalValues = new GlobalValues();
-	private validateDates buses = new validateDates(globalValues);
+    private final GlobalValues globalValues = new GlobalValues();
+    private final validateDates buses = new validateDates(globalValues);
+    private final DriverHelper driverHelper = new DriverHelper();
 
-	@BeforeSuite
-	public void launchBrowser() {
-		DriverHelper.launchBrowser();
-	}
+    @BeforeSuite
+    public void launchBrowser() {
+        driverHelper.launchBrowser(globalValues);
+    }
 
-	@Test
-	public void test() {
-		buses.getWeekEndDates();
-	}
+    @Test
+    public void test() {
+        buses.getWeekEndDates();
+    }
 
-	@Override
-	public void onTestFailure(ITestResult result) {
-		DriverHelper.QuitBrowser();
-	}
+//    @Override
+//    public void onTestFailure(ITestResult result) {
+//        driverHelper.QuitBrowser();
+//    }
 
 }

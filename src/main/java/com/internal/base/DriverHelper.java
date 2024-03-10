@@ -17,22 +17,26 @@ public class DriverHelper {
 	public static Properties prop;
 	private static WebDriver driver;
 
-	private static GlobalValues globalValues;
+	GlobalValues globalValues;
 
-	static {
+	public void loadAllProperties() {
 		prop = new Properties();
-		globalValues = new GlobalValues();
 		try {
-			FileInputStream fis = new FileInputStream(
+			FileInputStream FIS = new FileInputStream(
 					System.getProperty("user.dir") + "\\src\\test\\resources\\config.properties");
-			prop.load(fis);
+			prop.load(FIS);
+			for (String key : prop.stringPropertyNames()) {
+				LOG.info(key + "--" + prop.getProperty(key));
+			}
+			GlobalValues.setEnvConfig(prop);
 			LOG.info("SuccessFully Loaded The Config Properties");
 		} catch (Exception e) {
 			Assert.fail(e.getMessage());
 		}
 	}
 
-	public static void launchBrowser() {
+	public void launchBrowser(GlobalValues globalValues) {
+		loadAllProperties();
 		String browser = prop.getProperty("browser");
 		LOG.info("Browser : " + browser);
 		try {
@@ -66,6 +70,9 @@ public class DriverHelper {
 					driver = new EdgeDriver();
 				}
 			}
+			if (globalValues == null) {
+				this.globalValues = globalValues;
+			}
 			globalValues.dataBuffer.put("webDriver", driver);
 		} catch (Exception e) {
 			LOG.info("Exception occurred: " + e.getMessage());
@@ -73,9 +80,9 @@ public class DriverHelper {
 		}
 	}
 
-	public static void QuitBrowser() {
-		WebDriver driver = (WebDriver) globalValues.dataBuffer.get("webDriver");
-		driver.quit();
-	}
+//	public static void QuitBrowser() {
+//		WebDriver driver = (WebDriver) globalValues.dataBuffer.get("webDriver");
+//		driver.quit();
+//	}
 
 }
