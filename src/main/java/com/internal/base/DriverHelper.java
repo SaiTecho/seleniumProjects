@@ -14,7 +14,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class DriverHelper {
 	private static Logger LOG = Logger.getLogger(DriverHelper.class);
-	public static Properties prop;
+	private static Properties prop;
 	private static WebDriver driver;
 
 	GlobalValues globalValues;
@@ -39,6 +39,9 @@ public class DriverHelper {
 		loadAllProperties();
 		String browser = prop.getProperty("browser");
 		LOG.info("Browser : " + browser);
+		if (this.globalValues == null) {
+			this.globalValues = globalValues;
+		}
 		try {
 			if (Boolean.parseBoolean(prop.getProperty("browser.autoDownload"))) {
 				LOG.info("Auto Download is Enabled, Browser is downloading");
@@ -70,10 +73,8 @@ public class DriverHelper {
 					driver = new EdgeDriver();
 				}
 			}
-			if (globalValues == null) {
-				this.globalValues = globalValues;
-			}
-			globalValues.dataBuffer.put("webDriver", driver);
+			GlobalValues.dataBuffer.put("webDriver", driver);
+			LOG.info(GlobalValues.dataBuffer.get("webDriver"));
 		} catch (Exception e) {
 			LOG.info("Exception occurred: " + e.getMessage());
 			throw e;

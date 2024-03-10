@@ -13,15 +13,22 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class PageActions {
 	public WebDriver driver;
+
 	private static final Logger LOG = Logger.getLogger(PageActions.class);
 	private static Properties prop;
 
 	public PageActions(WebDriver driver) {
 		this.driver = driver;
+		this.prop = GlobalValues.envConfig;
 	}
 
 	public void NavigateTo(String url) {
 		try {
+			if (driver == null) {
+				LOG.info("driver was null");
+			}else {
+				LOG.info("NOT NULL");
+			}
 			this.driver.navigate().to(url);
 			waitForPageLoad();
 			LOG.info("Navigated to : " + url);
@@ -29,6 +36,14 @@ public class PageActions {
 			e.printStackTrace();
 			throw e;
 		}
+	}
+
+	public WebDriver getDriver() {
+		return driver;
+	}
+
+	public void setDriver(WebDriver driver) {
+		this.driver = driver;
 	}
 
 	public void waitForPageLoad() {

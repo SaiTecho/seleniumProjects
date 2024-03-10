@@ -12,12 +12,11 @@ import com.internal.base.GlobalValues;
 public class redBusTest implements ITestListener {
 
     private final GlobalValues globalValues = new GlobalValues();
-    private final validateDates buses = new validateDates(globalValues);
-    private final DriverHelper driverHelper = new DriverHelper();
+    private final validateDates buses = new validateDates();
 
     @BeforeSuite
     public void launchBrowser() {
-        driverHelper.launchBrowser(globalValues);
+        new DriverHelper().launchBrowser(globalValues);
     }
 
     @Test
