@@ -47,10 +47,24 @@ public class PageActions {
 		wait.until(ExpectedConditions.jsReturnsValue("return document.readyState === 'complete';"));
 	}
 
+	public void delayExecution(long seconds) {
+		try {
+			Thread.sleep(seconds * 1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public String getText(By by) {
+		waitForExpectedElement(by);
+		return this.driver.findElement(by).getText();
+	}
+
 	public void click(By by) {
 		try {
 			waitTillElementClickable(by);
 			this.driver.findElement(by).click();
+			LOG.info("clicked on element " + by);
 		} catch (Exception e) {
 			LOG.info("Normal click Doesn't worked ,trying again with jsClick");
 			jsClick(by);

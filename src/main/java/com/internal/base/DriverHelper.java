@@ -29,9 +29,6 @@ public class DriverHelper {
 			FileInputStream FIS = new FileInputStream(
 					System.getProperty("user.dir") + "\\src\\test\\resources\\config.properties");
 			prop.load(FIS);
-			for (String key : prop.stringPropertyNames()) {
-				LOG.info(key + "--" + prop.getProperty(key));
-			}
 			GlobalValues.envConfig = prop;
 			LOG.info("SuccessFully Loaded The Config Properties");
 		} catch (Exception e) {

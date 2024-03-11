@@ -22,7 +22,7 @@ public class redBusTest {
 	@Test
 	public void test() {
 		buses = new validateDates(globalValues);
-		buses.getWeekEndDates();
+		buses.getWeekEndDates("Jun 2024");
 	}
 
 	@AfterSuite

@@ -17,7 +17,30 @@ public class validateDates extends PageActions {
 		this.prop = GlobalValues.envConfig;
 	}
 
-	public void getWeekEndDates() {
+	public void getWeekEndDates(String date) {
 		NavigateTo(prop.getProperty("redBusUrl"));
+		click(redbusDatesXpaths.dateBtn);
+		String dateTxt = getText(redbusDatesXpaths.dateTxt);
+		LOG.info("Date : " + dateTxt);
+		String holidaysCount = getText(redbusDatesXpaths.holidaysCount);
+		LOG.info("Holidays : " + holidaysCount);
+		boolean enter = true;
+		while (enter) {
+			if (!dateTxt.equalsIgnoreCase(date)) {
+				click(redbusDatesXpaths.navigator);
+				dateTxt = getText(redbusDatesXpaths.dateTxt);
+				LOG.info("Date : " + dateTxt);
+				holidaysCount = getText(redbusDatesXpaths.holidaysCount);
+				LOG.info("Holidays : " + holidaysCount);
+			}else {
+				enter=false;
+				dateTxt = getText(redbusDatesXpaths.dateTxt);
+				LOG.info("Date : " + dateTxt);
+				holidaysCount = getText(redbusDatesXpaths.holidaysCount);
+				LOG.info("Holidays : " + holidaysCount);
+			}
+		}
+
+//		delayExecution(10);
 	}
 }
