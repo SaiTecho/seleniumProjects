@@ -1,6 +1,7 @@
 package com.internal.base;
 
 import java.time.Duration;
+import java.util.List;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
@@ -64,7 +65,6 @@ public class PageActions {
 		try {
 			waitTillElementClickable(by);
 			this.driver.findElement(by).click();
-			LOG.info("clicked on element " + by);
 		} catch (Exception e) {
 			LOG.info("Normal click Doesn't worked ,trying again with jsClick");
 			jsClick(by);
@@ -80,6 +80,10 @@ public class PageActions {
 			throw e;
 		}
 	}
+	
+	public List<WebElement> getMultipleElements(By by){
+		return driver.findElements(by);
+	}
 
 	public void jsClick(By by) {
 		try {
@@ -94,17 +98,14 @@ public class PageActions {
 	}
 
 	public void waitTillElementClickable(By by) {
-		LOG.info("waiting for the element to click " + by);
 		getWebDriverWait().until(ExpectedConditions.elementToBeClickable(by));
 	}
 
 	public void waitForExpectedElement(By by) {
-		LOG.info("waiting for the element to be visible " + by);
 		getWebDriverWait().until(ExpectedConditions.visibilityOfElementLocated(by));
 	}
 
 	public void waitTillElementVisible(WebElement element) {
-		LOG.info("waiting for the element to be visible ");
 		getWebDriverWait().until(ExpectedConditions.visibilityOf(element));
 	}
 
