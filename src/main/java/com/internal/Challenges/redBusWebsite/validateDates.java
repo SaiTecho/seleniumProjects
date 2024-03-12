@@ -1,9 +1,12 @@
 package com.internal.Challenges.redBusWebsite;
 
+import java.util.List;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import com.internal.base.GlobalValues;
 import com.internal.base.PageActions;
@@ -20,27 +23,28 @@ public class validateDates extends PageActions {
 	public void getWeekEndDates(String date) {
 		NavigateTo(prop.getProperty("redBusUrl"));
 		click(redbusDatesXpaths.dateBtn);
-		String dateTxt = getText(redbusDatesXpaths.dateTxt);
-		LOG.info("Date : " + dateTxt);
-		String holidaysCount = getText(redbusDatesXpaths.holidaysCount);
-		LOG.info("Holidays : " + holidaysCount);
+		String dateTxt = getText(redbusDatesXpaths.dateTxt).replaceAll("\n", " & Num of Holidays : ");
 		boolean enter = true;
 		while (enter) {
-			if (!dateTxt.equalsIgnoreCase(date)) {
+			if (dateTxt.toLowerCase().contains(date.toLowerCase())) {
+				enter = false;
+				dateTxt = getText(redbusDatesXpaths.dateTxt).replaceAll("\n", " & Num of Holidays : ");
+				LOG.info("Date : " + dateTxt);
+				getDates();
+			} else {
+				LOG.info("Date : " + dateTxt);
 				click(redbusDatesXpaths.navigator);
-				dateTxt = getText(redbusDatesXpaths.dateTxt);
-				LOG.info("Date : " + dateTxt);
-				holidaysCount = getText(redbusDatesXpaths.holidaysCount);
-				LOG.info("Holidays : " + holidaysCount);
-			}else {
-				enter=false;
-				dateTxt = getText(redbusDatesXpaths.dateTxt);
-				LOG.info("Date : " + dateTxt);
-				holidaysCount = getText(redbusDatesXpaths.holidaysCount);
-				LOG.info("Holidays : " + holidaysCount);
+				dateTxt = getText(redbusDatesXpaths.dateTxt).replaceAll("\n", " & Num of Holidays : ");
 			}
 		}
+	}
 
-//		delayExecution(10);
+	public void getDates() {
+		List<WebElement> dates = getMultipleElements(redbusDatesXpaths.getweekEndDates);
+		LOG.info("Weekend dates ..........................");
+		for (WebElement getdate : dates) {
+			getWebDriverWait().until(ExpectedConditions.visibilityOf(getdate));
+			LOG.info(getdate.getText());
+		}
 	}
 }

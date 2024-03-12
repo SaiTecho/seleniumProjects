@@ -11,5 +11,7 @@ public class redbusDatesXpaths {
 	public static By holidaysCount = By.cssSelector("div.holiday_count");
 	
 	public static By navigator = By.cssSelector("div[class^='DayNavigator__CalendarHeader']>div:nth-child(3)");
+	
+	public static By getweekEndDates = By.cssSelector("span[class='DayTiles__CalendarDaysSpan-sc-1xum02u-1 bwoYtA']");
 
 }
